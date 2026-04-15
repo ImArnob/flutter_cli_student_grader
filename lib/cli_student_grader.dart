@@ -38,44 +38,50 @@ Enter your choice: ''');
           print("New student added successfully.");
           break;
 
-
-
         case 2:
           for (int i = 0; i < student["name"].length; i++) {
             print("${i + 1}. ${student["name"][i]}");
           }
           stdout.write("Select the student number to record score: ");
           int studentIndex = int.parse(stdin.readLineSync()!) - 1;
-
+          if (studentIndex == 0 || studentIndex <= student["name"].length) {
             for (int i = 0; i < student["subjects"].length; i++) {
-              stdout.write("Enter score for ${student["subjects"][i]}: ");
-              student["scores"].add(int.parse(stdin.readLineSync()!));
+              stdout.write("Enter score for ${student["subjects"][i]}(0-100): ");
+              int inputScore = int.parse(stdin.readLineSync()!);
+              if (inputScore >= 0 && inputScore<=100) {
+                student["scores"].add(inputScore);
+              } else {
+                print("Invalid score. Please enter a score between 0 and 100.");
+              }
             }
-
-          print(" Scores recorded successfully.");
-          print("${student["name"]} score is ${student["scores"]}");
+            print(" Scores recorded successfully.");
+            print("${student["name"][studentIndex]} score is ${student["scores"]}");
+          }
           break;
-
-
 
         case 3:
           stdout.write("Enter bonus points (if any): ");
           student["Bonus"].add(int.parse(stdin.readLineSync() ?? '0'));
           break;
 
-
         case 4:
           stdout.write("Enter comment (if any): ");
           student["Comment"].add(stdin.readLineSync() ?? '');
           break;
 
-          
         case 5:
           print("All Students:");
           for (int i = 0; i < student["name"].length; i++) {
             print("${i + 1}. ${student["name"][i]}");
           }
           break;
+
+        // case 6:
+          // for (int i = 0; i < student["name"].length; i++) {
+          //   print("${i + 1}. ${student["name"][i]}");
+          // }
+          // stdout.write("Select the student number to record score: ");
+          // int studentIndex = int.parse(stdin.readLineSync()!) - 1;
       }
     }
   } while (input != 8);
