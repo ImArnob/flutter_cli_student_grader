@@ -6,8 +6,8 @@ void main() {
     "name": {"Nehal"},
     "subjects": {...subjects},
     "scores": [],
-    "Bonus": [],
-    "Comment": {},
+    "bonus": [],
+    "comment": {},
   };
   List<Map<String, dynamic>> students = [student];
 
@@ -46,27 +46,51 @@ Enter your choice: ''');
           int studentIndex = int.parse(stdin.readLineSync()!) - 1;
           if (studentIndex == 0 || studentIndex <= student["name"].length) {
             for (int i = 0; i < student["subjects"].length; i++) {
-              stdout.write("Enter score for ${student["subjects"][i]}(0-100): ");
+              stdout.write(
+                "Enter score for ${student["subjects"][i]}(0-100): ",
+              );
               int inputScore = int.parse(stdin.readLineSync()!);
-              if (inputScore >= 0 && inputScore<=100) {
+              while (inputScore >= 0 && inputScore <= 100) {
                 student["scores"].add(inputScore);
-              } else {
-                print("Invalid score. Please enter a score between 0 and 100.");
+                break;
               }
             }
             print(" Scores recorded successfully.");
-            print("${student["name"][studentIndex]} score is ${student["scores"]}");
+            print(
+              "${student["name"][studentIndex]} score is ${student["scores"]}",
+            );
           }
           break;
 
         case 3:
-          stdout.write("Enter bonus points (if any): ");
-          student["Bonus"].add(int.parse(stdin.readLineSync() ?? '0'));
+          for (int i = 0; i < student["name"].length; i++) {
+            print("${i + 1}. ${student["name"][i]}");
+          }
+          stdout.write("Select the student number to add bonus: ");
+          int studentIndex = int.parse(stdin.readLineSync()!) - 1;
+          if (studentIndex == 0 || studentIndex <= student["name"].length) {
+            if (student["bonus"] == null) {
+              stdout.write("Enter bonus points (if any)(0-5): ");
+              int bonusPoints = int.parse(stdin.readLineSync()!);
+              while (bonusPoints > 0 && bonusPoints <= 5) {
+                student["bonus"].add(bonusPoints);
+                print(" Bonus added successfully.");
+                print(
+                  "${student["name"][studentIndex]} bonus is ${student["bonus"]}",
+                );
+              } 
+            } 
+            else {
+              print(
+                " Bonus already added for ${student["name"][studentIndex]}",
+              );
+            }
+          }
           break;
 
         case 4:
           stdout.write("Enter comment (if any): ");
-          student["Comment"].add(stdin.readLineSync() ?? '');
+          student["comment"].add(stdin.readLineSync() ?? '');
           break;
 
         case 5:
@@ -77,11 +101,11 @@ Enter your choice: ''');
           break;
 
         // case 6:
-          // for (int i = 0; i < student["name"].length; i++) {
-          //   print("${i + 1}. ${student["name"][i]}");
-          // }
-          // stdout.write("Select the student number to record score: ");
-          // int studentIndex = int.parse(stdin.readLineSync()!) - 1;
+        // for (int i = 0; i < student["name"].length; i++) {
+        //   print("${i + 1}. ${student["name"][i]}");
+        // }
+        // stdout.write("Select the student number to record score: ");
+        // int studentIndex = int.parse(stdin.readLineSync()!) - 1;
       }
     }
   } while (input != 8);
